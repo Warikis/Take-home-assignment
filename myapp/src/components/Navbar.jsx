@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import  styles from '../Navbar.module.css';
+import { Link } from 'react-router-dom'
+import  styles from './styles/Navbar.module.css';
 
 
 function Navbar() {
@@ -27,17 +28,14 @@ function Navbar() {
           <a href='#home' className={`${styles.logo}`}>Dev. </a>
 
           <ul className={`${styles.navMenu} ${isActive ? styles.active : ''}`}>
-            <li key="home" onClick={removeActive}>
-              <a href='#home' className={`${styles.navLink}`}>Home</a>
+            <li key="Home" onClick={removeActive}>
+              <Link to="/" className={`${styles.navLink}`}>Home</Link>
             </li>
-            <li key="catalog" onClick={removeActive}>
-              <a href='#home' className={`${styles.navLink}`}>Catalog</a>
+            <li key="About" onClick={removeActive}>
+              <Link to="/about" className={`${styles.navLink}`}>About</Link>
             </li>
-            <li key="All products" onClick={removeActive}>
-              <a href='#home' className={`${styles.navLink}`}>All products</a>
-            </li>
-            <li key="Contact" onClick={removeActive}>
-              <a href='#home' className={`${styles.navLink}`}>Contact</a>
+            <li key="HelloWorld" onClick={removeActive}>
+              <Link to="/hello" className={`${styles.navLink}`}>HelloWorld</Link>
             </li>
           </ul>
 

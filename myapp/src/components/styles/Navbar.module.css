@@ -20,6 +20,8 @@
   
   /* navbar */
   .navbar {
+    position: sticky;
+    top: 0;
     background-color: aliceblue;
     padding: 10px 20px;
     display: flex;
