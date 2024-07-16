@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import  styles from './styles/Navbar.module.css';
 
 
-function Navbar() {
+function Navbar({ isLoggedIn, setIsLoggedIn }) {
 
   // adding the states 
   const [isActive, setIsActive] = useState(false);
@@ -16,19 +16,21 @@ function Navbar() {
   //clean up function to remove the active class
   const removeActive = () => {
     setIsActive(false)
-  }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    removeActive();
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-
         <nav className={`${styles.navbar}`}>
 
           {/* logo */}
           <a href='#home' className={`${styles.logo}`}>Dev. </a>
-
+          
           <ul className={`${styles.navMenu} ${isActive ? styles.active : ''}`}>
-            <li key="Home" onClick={removeActive}>
+          <li key="Home" onClick={removeActive}>
               <Link to="/" className={`${styles.navLink}`}>Home</Link>
             </li>
             <li key="About" onClick={removeActive}>
@@ -37,6 +39,22 @@ function Navbar() {
             <li key="HelloWorld" onClick={removeActive}>
               <Link to="/hello" className={`${styles.navLink}`}>HelloWorld</Link>
             </li>
+          {isLoggedIn ? (
+            <>
+            <li key="Logout" onClick={removeActive} className={`${styles.rightNav}`}>
+              <Link to="#" className={`${styles.navLink}`}>Log Out</Link>
+            </li>
+            </>
+          ) : (
+            <>
+            <li key="Register" onClick={removeActive} className={`${styles.rightNav}`}>
+              <Link to="/register" className={`${styles.navLink}`}>Register</Link>
+            </li>
+            <li key="Login" onClick={removeActive} className={`${styles.rightNav}`}>
+              <Link to="/login" className={`${styles.navLink}`}>Log In</Link>
+            </li>
+            </>
+          )}
           </ul>
 
           <div className={`${styles.hamburger} ${isActive ? styles.active : ''}`}  onClick={toggleActiveClass}>
@@ -45,9 +63,6 @@ function Navbar() {
             <span className={`${styles.bar}`}></span>
           </div>
         </nav>
-
-      </header>
-    </div>
   );
 }
 
