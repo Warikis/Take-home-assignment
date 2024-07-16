@@ -19,6 +19,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
     removeActive();
   };
@@ -27,7 +28,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
         <nav className={`${styles.navbar}`}>
 
           {/* logo */}
-          <a href='#home' className={`${styles.logo}`}>Dev. </a>
+          <a href='/' className={`${styles.logo}`}>Dev. </a>
           
           <ul className={`${styles.navMenu} ${isActive ? styles.active : ''}`}>
           <li key="Home" onClick={removeActive}>
@@ -41,7 +42,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
             </li>
           {isLoggedIn ? (
             <>
-            <li key="Logout" onClick={removeActive} className={`${styles.rightNav}`}>
+            <li key="Logout" onClick={handleLogout} className={`${styles.rightNav}`}>
               <Link to="#" className={`${styles.navLink}`}>Log Out</Link>
             </li>
             </>
