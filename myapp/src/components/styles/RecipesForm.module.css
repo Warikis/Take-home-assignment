@@ -1,0 +1,40 @@
+/* RecipesForm.module.css */
+
+.formContainer {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.formContainer div {
+    margin-bottom: 15px;
+}
+
+.formContainer label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formContainer input,
+.formContainer textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.formContainer button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formContainer button:hover {
+    background-color: #0056b3;
+}

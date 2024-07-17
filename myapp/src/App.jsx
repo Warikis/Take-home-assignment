@@ -6,6 +6,8 @@ import Home from './components/Home';
 import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
+import Recipes from './components/Recipes';
+import RecipesForm from './components/RecipesForm';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,8 +28,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/hello" element={<HelloWorld />} />
-            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/recipes" element={<Recipes />} />
+            <Route path="/recipes/new" element={<RecipesForm />} />
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           </Routes>
         </header>
       </div>

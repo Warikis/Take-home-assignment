@@ -75,6 +75,7 @@ const Register = () => {
     return (
         <div>
         <h2>Register</h2>
+        {errorMessage && <div className="error">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="username">Username:</label>

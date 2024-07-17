@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'myapi.apps.MyapiConfig',
     'polls.apps.PollsConfig',
+    'recipes.apps.RecipesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
