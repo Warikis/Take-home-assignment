@@ -22,10 +22,18 @@ function RecipesForm() {
     }, [navigate]);
     
     const parseDuration = (duration) => {
-        const [hoursPart, minutesPart] = duration.split('h');
-        const hours = parseInt(hoursPart.trim()) || 0;
-        const minutes = parseInt(minutesPart.trim().replace('m', '')) || 0;
-        return hours * 3600 + minutes * 60;
+        try{
+            if (!/^\d+h(\s*\d+m)?$/.test(duration)) {
+                throw new Error('Invalid format');
+            }
+            const [hoursPart, minutesPart] = duration.split('h');
+            const hours = parseInt(hoursPart.trim()) || 0;
+            const minutes = minutesPart ? parseInt(minutesPart.trim().replace('m', '')) || 0 : 0;
+            return hours * 3600 + minutes * 60;
+        }
+        catch(error){
+            throw new Error('Please use the correct format, for example "1h 30m" or "2h".');
+        }
     };
 
     const handleSubmit = (event) => {
@@ -40,37 +48,41 @@ function RecipesForm() {
 
         console.log(`Using token: ${token}`);
 
-        const newRecipe = {
-            name,
-            description,
-            number_of_persons: numberOfPersons,
-            total_time_to_prepare: parseDuration(totalTimeToPrepare),
-            ingredients,
-            steps,
-            video_url: videoUrl,
-            image_url: imageUrl,
-        };
+        try {
+            const newRecipe = {
+                name,
+                description,
+                number_of_persons: numberOfPersons,
+                total_time_to_prepare: parseDuration(totalTimeToPrepare),
+                ingredients,
+                steps,
+                video_url: videoUrl,
+                image_url: imageUrl,
+            };
 
         
-        axios.post('http://localhost:8000/recipes/new/', newRecipe, {
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(response => {
-            setName('');
-            setDescription('');
-            setNumberOfPersons(1);
-            setTotalTimeToPrepare('');
-            setIngredients('');
-            setSteps('');
-            setVideoUrl('');
-            setImageUrl('');
-            navigate('/recipes');
-        })
-        .catch(error => {
+            axios.post('http://localhost:8000/recipes/new/', newRecipe, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(response => {
+                setName('');
+                setDescription('');
+                setNumberOfPersons(1);
+                setTotalTimeToPrepare('');
+                setIngredients('');
+                setSteps('');
+                setVideoUrl('');
+                setImageUrl('');
+                navigate('/recipes');
+            })
+        }
+        catch (error) {
+            alert(error.message);
             console.error('There was an error creating the recipe!', error);
-        });
+            return;
+        };
     };
 
     
@@ -97,7 +109,7 @@ function RecipesForm() {
                 />
             </div>
             <div>
-                <label htmlFor="numberOfPersons">Number of Persons:</label>
+                <label htmlFor="numberOfPersons">Number of Servings:</label>
                 <input
                     type="number"
                     id="numberOfPersons"

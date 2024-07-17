@@ -22,6 +22,17 @@ function Recipes() {
             });
     };
 
+    function formatTime(timeString) {
+        const [hours, minutes] = timeString.split(':').map(Number);
+        let result = '';
+        if (hours > 0) {
+          result += `${hours} hour${hours > 1 ? 's' : ''} `;
+        }
+        if (minutes > 0) {
+          result += `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        }
+        return result.trim();
+      }
 
     return (
         <div className={styles.container}>
@@ -32,10 +43,20 @@ function Recipes() {
                     <li key={recipe.id} className={styles.recipeItem}>
                         <h2>{recipe.name}</h2>
                         <p>{recipe.description}</p>
-                        <p>Serves: {recipe.number_of_persons}</p>
-                        <p>Total time: {recipe.total_time_to_prepare}</p>
-                        <p>Ingredients: {recipe.ingredients}</p>
-                        <p>Steps: {recipe.steps}</p>
+                        <p>Servings: {recipe.number_of_persons}</p>
+                        <p>Total time: {formatTime(recipe.total_time_to_prepare)}</p>
+                        <h3><p>Ingredients:</p></h3>
+                        <ul>
+                            {recipe.ingredients.split('\n').map((ingredient, index) => (
+                                <li key={index}>{ingredient}</li>
+                            ))}
+                        </ul>
+                        <h4><p>Steps:</p></h4>
+                        <ul>
+                            {recipe.steps.split('\n').map((step, index) => (
+                            <li key={index}>{step}</li>
+                            ))}
+                        </ul>
                         {recipe.video_url && <video src={recipe.video_url} controls />}
                         {recipe.image_url && <img src={recipe.image_url} alt={recipe.name} />}
                     </li>
