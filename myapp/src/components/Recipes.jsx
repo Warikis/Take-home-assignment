@@ -3,11 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import styles from './styles/Recipes.module.css';
 
-const formatDuration = (duration) => {
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
-    return `${hours}h ${minutes}m`;
-};
+
 
 function Recipes() {
     const [recipes, setRecipes] = useState([]);
@@ -26,9 +22,6 @@ function Recipes() {
             });
     };
 
-    const handleFormSubmit = (newRecipe) => {
-        setRecipes([...recipes, newRecipe]);
-    };
 
     return (
         <div className={styles.container}>

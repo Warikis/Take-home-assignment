@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './styles/RecipesForm.module.css';
+import { useNavigate} from 'react-router-dom';
 
-function RecipesForm({ onFormSubmit }) {
+function RecipesForm() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [numberOfPersons, setNumberOfPersons] = useState(1);
@@ -11,9 +12,33 @@ function RecipesForm({ onFormSubmit }) {
     const [steps, setSteps] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, [navigate]);
+    
+    const parseDuration = (duration) => {
+        const [hoursPart, minutesPart] = duration.split('h');
+        const hours = parseInt(hoursPart.trim()) || 0;
+        const minutes = parseInt(minutesPart.trim().replace('m', '')) || 0;
+        return hours * 3600 + minutes * 60;
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            console.error('No token found. Please log in.');
+            navigate('/login');
+            return;
+        }
+
+        console.log(`Using token: ${token}`);
 
         const newRecipe = {
             name,
@@ -26,29 +51,29 @@ function RecipesForm({ onFormSubmit }) {
             image_url: imageUrl,
         };
 
-        axios.post('http://localhost:8000/recipes/', newRecipe)
-            .then(response => {
-                onFormSubmit(response.data);
-                setName('');
-                setDescription('');
-                setNumberOfPersons(1);
-                setTotalTimeToPrepare('');
-                setIngredients('');
-                setSteps('');
-                setVideoUrl('');
-                setImageUrl('');
-            })
-            .catch(error => {
-                console.error('There was an error creating the recipe!', error);
-            });
+        
+        axios.post('http://localhost:8000/recipes/new/', newRecipe, {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(response => {
+            setName('');
+            setDescription('');
+            setNumberOfPersons(1);
+            setTotalTimeToPrepare('');
+            setIngredients('');
+            setSteps('');
+            setVideoUrl('');
+            setImageUrl('');
+            navigate('/recipes');
+        })
+        .catch(error => {
+            console.error('There was an error creating the recipe!', error);
+        });
     };
 
-    const parseDuration = (duration) => {
-        const [hoursPart, minutesPart] = duration.split('h');
-        const hours = parseInt(hoursPart.trim()) || 0;
-        const minutes = parseInt(minutesPart.trim().replace('m', '')) || 0;
-        return hours * 3600 + minutes * 60;
-    };
+    
 
     return (
         <form onSubmit={handleSubmit} className={styles.formContainer}>

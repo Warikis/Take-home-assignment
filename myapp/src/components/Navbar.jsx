@@ -43,12 +43,11 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
             <li key="Recipes" onClick={removeActive}>
               <Link to="/recipes" className={`${styles.navLink}`}>Recipes</Link>
             </li>
+          {isLoggedIn ? (
+            <>
             <li key="NewRecipe" onClick={removeActive}>
               <Link to="/recipes/new" className={`${styles.navLink}`}>New Recipe</Link>
             </li>
-            
-          {isLoggedIn ? (
-            <>
             <li key="Logout" onClick={handleLogout} className={`${styles.rightNav}`}>
               <Link to="#" className={`${styles.navLink}`}>Log Out</Link>
             </li>

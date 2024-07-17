@@ -42,7 +42,12 @@ const Login = ({ setIsLoggedIn }) => {
             const data = await response.json();
             localStorage.setItem('token', data.token); // Store the session token
             setIsLoggedIn(true);
-            console.log(data); // Handle success
+            console.log('Login response data:', data); // Log the entire data object
+            if (data.token) {
+                console.log('Token:', data.token); // Log the token if present
+            } else {
+                console.error('Token not found in response:', data);
+            }
             navigate('/'); // Redirect to main page only after successful login
         } catch (error) {
             console.error('There was a problem with your fetch operation:', error);
