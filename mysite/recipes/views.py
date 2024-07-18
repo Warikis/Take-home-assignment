@@ -30,12 +30,13 @@ class RecipeViewSet(APIView):
     
     def delete(self, request, pk, format=None):
         recipe = get_object_or_404(Recipe, pk=pk)
+        print(recipe.user_id)
+        print(request.user.id)
         if recipe.user_id == request.user.id:
             recipe.delete()
-            Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)  # Corrected line
         else:
             return Response({"detail": "You do not have permission to delete this recipe."}, status=status.HTTP_403_FORBIDDEN)
-    
 
 class RecipesFormView(APIView):
     permission_classes = [IsAuthenticated]

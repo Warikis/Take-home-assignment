@@ -3,8 +3,8 @@ import axios from 'axios';
 import styles from './styles/RecipesForm.module.css';
 import { useNavigate} from 'react-router-dom';
 
-function RecipesForm() {
-    const [name, setName] = useState('');
+function RecipesForm( { recipe, onSave, onCancel } ) {
+    const [name, setName] = useState(recipe ? recipe.name : '');
     const [description, setDescription] = useState('');
     const [numberOfPersons, setNumberOfPersons] = useState(1);
     const [totalTimeToPrepare, setTotalTimeToPrepare] = useState('');
@@ -36,7 +36,7 @@ function RecipesForm() {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const token = localStorage.getItem('token');
 
@@ -167,6 +167,7 @@ function RecipesForm() {
                 />
             </div>
             <button type="submit">Submit</button>
+            
         </form>
     );
 }

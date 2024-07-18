@@ -21,6 +21,15 @@
     font-size: 24px;
 }
 
+.recipeItem ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.recipeItem li {
+    margin-bottom: 5px;
+}
+
 .recipeItem p {
     margin: 5px 0;
 }
@@ -36,4 +45,32 @@
     width: 100%;
     display: block;
     margin-top: 10px;
+}
+
+.recipeItem button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.editButton {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.deleteButton {
+    background-color: #d9534f;
+    color: white;
+}
+
+.saveButton {
+    background-color: #5cb85c;
+    color: white;
+}
+
+.cancelButton {
+    background-color: #5bc0de;
+    color: white;
 }
