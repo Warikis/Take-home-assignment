@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import  styles from './styles/Navbar.module.css';
+import { useNavigate } from 'react-router-dom';
 
 
 function Navbar({ isLoggedIn, setIsLoggedIn }) {
+  const navigate = useNavigate();
 
   // adding the states 
   const [isActive, setIsActive] = useState(false);
@@ -22,6 +24,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     removeActive();
+    navigate('/');
   };
 
   return (

@@ -28,6 +28,24 @@ class RecipeViewSet(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
     
+    def put(self, request, pk, format=None):
+        print("Received PUT request data:", request.data)  # Log received data
+        recipe = get_object_or_404(Recipe, pk=pk)
+        if recipe.user_id != request.user.id:
+            return Response({"detail": "You do not have permission to edit this recipe."}, status=status.HTTP_403_FORBIDDEN)
+
+        # Create a mutable copy of request.data
+        modified_data = request.data.copy()
+        modified_data['user'] = request.user.id
+
+        serializer = RecipeSerializer(recipe, data=modified_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print("Serializer errors:", serializer.errors)  # Log serializer errors
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     def delete(self, request, pk, format=None):
         recipe = get_object_or_404(Recipe, pk=pk)
         print(recipe.user_id)
