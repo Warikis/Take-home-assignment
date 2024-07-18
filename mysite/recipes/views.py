@@ -31,14 +31,11 @@ class RecipeViewSet(APIView):
     def put(self, request, pk, format=None):
         print("Received PUT request data:", request.data)  # Log received data
         recipe = get_object_or_404(Recipe, pk=pk)
-        if recipe.user_id != request.user.id:
+        if not (recipe.user_id == request.user.id or request.user.is_staff):
             return Response({"detail": "You do not have permission to edit this recipe."}, status=status.HTTP_403_FORBIDDEN)
 
-        # Create a mutable copy of request.data
-        modified_data = request.data.copy()
-        modified_data['user'] = request.user.id
-
-        serializer = RecipeSerializer(recipe, data=modified_data)
+        # No longer modifying the 'user' field here
+        serializer = RecipeSerializer(recipe, data=request.data, partial=True)  # Allow partial updates
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -48,9 +45,14 @@ class RecipeViewSet(APIView):
     
     def delete(self, request, pk, format=None):
         recipe = get_object_or_404(Recipe, pk=pk)
-        print(recipe.user_id)
-        print(request.user.id)
-        if recipe.user_id == request.user.id:
+        #print(recipe.user_id)
+        #print(request.user.id)
+        #print(request)
+        #print(request.headers)
+        #print(request.data)
+        #print(request.user)
+        #print(request.user.is_staff)
+        if recipe.user_id == request.user.id or request.user.is_staff:
             recipe.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)  # Corrected line
         else:

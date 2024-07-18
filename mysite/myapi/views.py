@@ -57,4 +57,5 @@ class CurrentUserView(APIView):
         return Response({
             'id': user.id,
             'username': user.username,
+            'is_staff': user.is_staff,
         })

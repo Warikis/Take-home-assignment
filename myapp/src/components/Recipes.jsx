@@ -8,6 +8,7 @@ function Recipes({ recipeToEdit }) {
     const [editRecipeId, setEditRecipeId] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
+    const [isStaff, setIsStaff] = useState(false);
     const token = localStorage.getItem('token');
 
     const [editFormData, setEditFormData] = useState({
@@ -28,8 +29,10 @@ function Recipes({ recipeToEdit }) {
             })
             .then(response => {
                 setCurrentUser(response.data.id); // Assuming the user object has an 'id' property
+                setIsStaff(response.data.is_staff);
                 //console.log('Current user:', response.data);
                 //console.log('Current user ID:', response.data.id);
+                //console.log('Is staff:', response.data.is_staff);
             })
             .catch(error => {
                 console.error('There was an error fetching the current user!', error);
@@ -209,7 +212,7 @@ function Recipes({ recipeToEdit }) {
                             </ul>
                             {recipe.video_url && <video src={recipe.video_url} controls />}
                             {recipe.image_url && <img src={recipe.image_url} alt={recipe.name} />}
-                            {currentUser && currentUser === recipe.user && (
+                            {currentUser && (currentUser === recipe.user || isStaff)  && (
                                 <>
                                     <button onClick={() => startEdit(recipe)} className={styles.editButton}>Edit</button>
                                     <button onClick={() => deleteRecipe(recipe.id)} className={styles.deleteButton}>Delete</button>
