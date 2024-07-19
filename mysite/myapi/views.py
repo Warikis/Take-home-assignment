@@ -59,3 +59,8 @@ class CurrentUserView(APIView):
             'username': user.username,
             'is_staff': user.is_staff,
         })
+    
+
+@api_view(['GET'])
+def health(request):
+    return Response({'message': 'Healthy!'})

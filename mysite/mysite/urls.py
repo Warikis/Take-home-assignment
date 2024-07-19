@@ -22,5 +22,4 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('api/', include('myapi.urls')),
     path('recipes/', include('recipes.urls')),
-    path('recipes/new/', include('recipes.urls')),
 ]

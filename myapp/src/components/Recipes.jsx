@@ -25,7 +25,7 @@ function Recipes({ recipeToEdit }) {
 
     useEffect(() => {
         const fetchCurrentUser = () => {
-            axios.get(`${apiUrl}/api/current_user/`, {
+            axios.get(`https://api.denysyushanov.com/api/current_user/`, {
                 headers: { Authorization: `Token ${token}` }
             })
             .then(response => {
@@ -154,75 +154,79 @@ function Recipes({ recipeToEdit }) {
             <h1>Recipes</h1>
             <Link to="/recipes/new">Add a new recipe</Link>
             <ul className={`${styles.recipeList}`}>
-                {recipes.map(recipe => (
-                    <li key={recipe.id} className={styles.recipeItem}>
-                    {isEditing && editRecipeId === recipe.id ? (
-                        <form onSubmit={(e) => { e.preventDefault(); saveEdit(recipe.id); }}>
-                            <div>
-                                <label htmlFor="name">Name:</label>
-                                <input type="text" name="name" value={editFormData.name} onChange={handleEditFormChange} required />
-                            </div>
-                            <div>
-                                <label htmlFor="description">Description:</label>
-                                <textarea name="description" value={editFormData.description} onChange={handleEditFormChange} required />
-                            </div>
-                            <div>
-                                <label htmlFor="number_of_persons">Number of Persons:</label>
-                                <input type="number" name="number_of_persons" value={editFormData.number_of_persons} onChange={handleEditFormChange} required />
-                            </div>
-                            <div>
-                                <label htmlFor="total_time_to_prepare">Total Time to Prepare:</label>
-                                <input type="text" name="total_time_to_prepare" value={editFormData.total_time_to_prepare} onChange={handleEditFormChange} required />
-                            </div>
-                            <div>
-                                <label htmlFor="ingredients">Ingredients:</label>
-                                <textarea name="ingredients" value={editFormData.ingredients} onChange={handleEditFormChange} required />
-                            </div>
-                            <div>
-                                <label htmlFor="steps">Steps:</label>
-                                <textarea name="steps" value={editFormData.steps} onChange={handleEditFormChange} required />
-                            </div>
-                            <div>
-                                <label htmlFor="video_url">Video URL:</label>
-                                <input type="url" name="video_url" value={editFormData.video_url} onChange={handleEditFormChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="image_url">Image URL:</label>
-                                <input type="url" name="image_url" value={editFormData.image_url} onChange={handleEditFormChange} />
-                            </div>
-                            <button type="submit" className={styles.saveButton}>Save</button>
-                            <button type="button" onClick={cancelEdit} className={styles.cancelButton}>Cancel</button>
-                        </form>
-                    ) : (
-                        <>
-                            <h2>{recipe.name}</h2>
-                            <p>{recipe.description}</p>
-                            <p>Servings: {recipe.number_of_persons}</p>
-                            <p>Total time: {formatTime(recipe.total_time_to_prepare)}</p>
-                            <h3><p>Ingredients:</p></h3>
-                            <ul>
-                                {recipe.ingredients.split('\n').map((ingredient, index) => (
-                                    <li key={index}>{ingredient}</li>
-                                ))}
-                            </ul>
-                            <h4><p>Steps:</p></h4>
-                            <ul>
-                                {recipe.steps.split('\n').map((step, index) => (
-                                    <li key={index}>{step}</li>
-                                ))}
-                            </ul>
-                            {recipe.video_url && <video src={recipe.video_url} controls />}
-                            {recipe.image_url && <img src={recipe.image_url} alt={recipe.name} />}
-                            {currentUser && (currentUser === recipe.user || isStaff)  && (
+                {Array.isArray(recipes) && recipes.length > 0 ? (
+                    recipes.map(recipe => (
+                        <li key={recipe.id} className={styles.recipeItem}>
+                            {isEditing && editRecipeId === recipe.id ? (
+                                <form onSubmit={(e) => { e.preventDefault(); saveEdit(recipe.id); }}>
+                                    <div>
+                                        <label htmlFor="name">Name:</label>
+                                        <input type="text" name="name" value={editFormData.name} onChange={handleEditFormChange} required />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="description">Description:</label>
+                                        <textarea name="description" value={editFormData.description} onChange={handleEditFormChange} required />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="number_of_persons">Number of Persons:</label>
+                                        <input type="number" name="number_of_persons" value={editFormData.number_of_persons} onChange={handleEditFormChange} required />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="total_time_to_prepare">Total Time to Prepare:</label>
+                                        <input type="text" name="total_time_to_prepare" value={editFormData.total_time_to_prepare} onChange={handleEditFormChange} required />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="ingredients">Ingredients:</label>
+                                        <textarea name="ingredients" value={editFormData.ingredients} onChange={handleEditFormChange} required />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="steps">Steps:</label>
+                                        <textarea name="steps" value={editFormData.steps} onChange={handleEditFormChange} required />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="video_url">Video URL:</label>
+                                        <input type="url" name="video_url" value={editFormData.video_url} onChange={handleEditFormChange} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="image_url">Image URL:</label>
+                                        <input type="url" name="image_url" value={editFormData.image_url} onChange={handleEditFormChange} />
+                                    </div>
+                                    <button type="submit" className={styles.saveButton}>Save</button>
+                                    <button type="button" onClick={cancelEdit} className={styles.cancelButton}>Cancel</button>
+                                </form>
+                            ) : (
                                 <>
-                                    <button onClick={() => startEdit(recipe)} className={styles.editButton}>Edit</button>
-                                    <button onClick={() => deleteRecipe(recipe.id)} className={styles.deleteButton}>Delete</button>
+                                    <h2>{recipe.name}</h2>
+                                    <p>{recipe.description}</p>
+                                    <p>Servings: {recipe.number_of_persons}</p>
+                                    <p>Total time: {formatTime(recipe.total_time_to_prepare)}</p>
+                                    <h3><p>Ingredients:</p></h3>
+                                    <ul>
+                                        {recipe.ingredients.split('\n').map((ingredient, index) => (
+                                            <li key={index}>{ingredient}</li>
+                                        ))}
+                                    </ul>
+                                    <h4><p>Steps:</p></h4>
+                                    <ul>
+                                        {recipe.steps.split('\n').map((step, index) => (
+                                            <li key={index}>{step}</li>
+                                        ))}
+                                    </ul>
+                                    {recipe.video_url && <video src={recipe.video_url} controls />}
+                                    {recipe.image_url && <img src={recipe.image_url} alt={recipe.name} />}
+                                    {currentUser && (currentUser === recipe.user || isStaff) && (
+                                        <>
+                                            <button onClick={() => startEdit(recipe)} className={styles.editButton}>Edit</button>
+                                            <button onClick={() => deleteRecipe(recipe.id)} className={styles.deleteButton}>Delete</button>
+                                        </>
+                                    )}
                                 </>
                             )}
-                        </>
-                    )}
-                    </li>
-                ))}
+                        </li>
+                    ))
+                ) : (
+                    <p>No recipes available.</p>
+                )}
             </ul>
         </div>
     );
