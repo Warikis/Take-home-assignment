@@ -5,6 +5,7 @@ const Login = ({ setIsLoggedIn }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -20,7 +21,7 @@ const Login = ({ setIsLoggedIn }) => {
         const userData = { username, password };
         
         try {
-            const response = await fetch('http://localhost:8000/api/login/', {
+            const response = await fetch(`http://3.86.198.216/api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

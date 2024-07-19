@@ -8,6 +8,7 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -42,7 +43,7 @@ const Register = () => {
         const userData = { username, password, email };
         
         try {
-            const response = await fetch('http://localhost:8000/api/register/', {
+            const response = await fetch(`http://3.86.198.216/api/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

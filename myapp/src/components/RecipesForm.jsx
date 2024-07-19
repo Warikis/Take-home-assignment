@@ -13,6 +13,7 @@ function RecipesForm( { recipe, onSave, onCancel } ) {
     const [videoUrl, setVideoUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -61,7 +62,7 @@ function RecipesForm( { recipe, onSave, onCancel } ) {
             };
 
         
-            axios.post('http://localhost:8000/recipes/new/', newRecipe, {
+            axios.post(`http://3.86.198.216/recipes/new/`, newRecipe, {
                 headers: {
                     Authorization: `Token ${token}`
                 }
