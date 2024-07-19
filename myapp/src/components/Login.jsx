@@ -21,7 +21,7 @@ const Login = ({ setIsLoggedIn }) => {
         const userData = { username, password };
         
         try {
-            const response = await fetch(`http://3.86.198.216/api/login/`, {
+            const response = await fetch(`${apiUrl}/api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

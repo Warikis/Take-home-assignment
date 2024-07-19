@@ -62,7 +62,7 @@ function RecipesForm( { recipe, onSave, onCancel } ) {
             };
 
         
-            axios.post(`http://3.86.198.216/recipes/new/`, newRecipe, {
+            axios.post(`${apiUrl}/recipes/new/`, newRecipe, {
                 headers: {
                     Authorization: `Token ${token}`
                 }

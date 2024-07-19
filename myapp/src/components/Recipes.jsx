@@ -25,7 +25,7 @@ function Recipes({ recipeToEdit }) {
 
     useEffect(() => {
         const fetchCurrentUser = () => {
-            axios.get(`http://3.86.198.216/api/current_user/`, {
+            axios.get(`${apiUrl}/api/current_user/`, {
                 headers: { Authorization: `Token ${token}` }
             })
             .then(response => {
@@ -48,7 +48,7 @@ function Recipes({ recipeToEdit }) {
 
 
     const fetchRecipes = () => {
-        axios.get(`http://3.86.198.216/recipes/`)
+        axios.get(`${apiUrl}/recipes/`)
             .then(response => {
                 setRecipes(response.data);
             })
@@ -107,7 +107,7 @@ function Recipes({ recipeToEdit }) {
     };
 
     const saveEdit = (id) => {
-        axios.put(`http://3.86.198.216/recipes/${id}/`, editFormData, {
+        axios.put(`${apiUrl}/recipes/${id}/`, editFormData, {
             headers: {
                 Authorization: `Token ${token}`,
                 'Content-Type': 'application/json'
@@ -129,7 +129,7 @@ function Recipes({ recipeToEdit }) {
 
     const deleteRecipe = async (id) => {
         try {
-            const response = await fetch(`http://3.86.198.216/recipes/${id}`, {
+            const response = await fetch(`${apiUrl}/recipes/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Token ${token}`

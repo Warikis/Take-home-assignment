@@ -6,7 +6,7 @@ function HelloWorld() {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    axios.get(`http://3.86.198.216/api/hello-world/`)
+    axios.get(`${apiUrl}/api/hello-world/`)
       .then(response => {
         setMessage(response.data.message);
       })
